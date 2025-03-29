@@ -60,6 +60,7 @@ while IFS= read -r md_file; do
     --metadata pagetitle="$base_name" \
     --metadata is_post=true \
     --mathjax \
+    --from markdown+tex_math_dollars \
     --to html5 \
     -o "$html_file"
 
