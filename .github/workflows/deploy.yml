@@ -31,7 +31,9 @@ jobs:
       - name: Set up Pandoc
         run: |
           sudo apt-get update
-          sudo apt-get install -y pandoc pandoc-citeproc # Install pandoc and citeproc
+          sudo apt-get install -y pandoc 
+          wget https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.12.0/pandoc-crossref-Linux.tar.gz
+          tar -xzf pandoc-crossref-Linux.tar.gz -C /usr/local/bin
       - name: Make build script executable
         run: chmod +x ./build.sh
       - name: Build Site
