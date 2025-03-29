@@ -1,0 +1,127 @@
+/* Basic Reset / Base Styles */
+body {
+  font-family: sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: #fdfdfd;
+  color: #333;
+}
+
+/* Container for centering content */
+.container {
+  max-width: 800px; /* Adjust as needed */
+  margin: 1em auto;
+  padding: 1em 2em;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Header */
+.site-header h1 {
+  text-align: center;
+  margin-bottom: 0.5em;
+  margin-top: 0;
+  font-size: 2.5em;
+}
+.site-header h1 a {
+  color: #2a2a2a;
+  text-decoration: none;
+}
+.site-header hr {
+  border: 0;
+  height: 1px;
+  background-color: #eee;
+  margin-bottom: 2em;
+}
+
+/* Main Content Area */
+.content {
+  padding-bottom: 2em;
+}
+
+/* Post Navigation (Back button) */
+.post-nav {
+  margin-bottom: 1.5em;
+  font-size: 0.9em;
+}
+.post-nav a {
+  text-decoration: none;
+  color: #007bff;
+}
+.post-nav a:hover {
+  text-decoration: underline;
+}
+
+/* Post Title and Metadata */
+.post-title {
+  margin-bottom: 0.25em;
+  color: #333;
+}
+.post-meta {
+  color: #666;
+  font-size: 0.9em;
+  margin-top: 0;
+  margin-bottom: 1.5em;
+}
+
+/* Links */
+a {
+  color: #007bff;
+}
+a:hover {
+  color: #0056b3;
+}
+
+/* Footer */
+.site-footer {
+  margin-top: 2em;
+  padding-top: 1em;
+  text-align: center;
+  font-size: 0.8em;
+  color: #888;
+  border-top: 1px solid #eee;
+}
+.site-footer hr {
+  display: none; /* Hide hr if using border-top */
+}
+
+/* Citation Styling */
+a.citation {
+  /* Standard link styling */
+  color: #007bff;
+  text-decoration: none;
+  /* Optional: slightly different look */
+  border-bottom: 1px dotted #007bff;
+  /* Prevent line breaks within the citation link */
+  white-space: nowrap;
+}
+a.citation:hover {
+  text-decoration: underline;
+  background-color: #f0f0f0; /* Slight highlight on hover */
+}
+
+/* Bibliography Section */
+.references {
+  margin-top: 3em;
+  padding-top: 1.5em;
+  border-top: 1px solid #ccc;
+  font-size: 0.9em; /* Make bibliography slightly smaller */
+}
+.references h2, /* Style the "References" heading if generated */
+#refs h2 { /* Pandoc often uses #refs */
+  font-size: 1.2em;
+  margin-bottom: 1em;
+}
+.csl-entry {
+  margin-bottom: 0.8em;
+  line-height: 1.4;
+}
+
+/* MathJax Display Math Centering (if needed) */
+.mjx-chtml.MJXc-display {
+  margin: 1em 0;
+  display: block;
+  text-align: center; /* Center display math */
+}
+

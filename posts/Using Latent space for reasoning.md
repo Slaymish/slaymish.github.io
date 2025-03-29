@@ -1,4 +1,5 @@
 2025-03-29
+
 ***
 
 So I watched this video on a new research paper from meta ([@geiping2025scaling]). I'll lead in with what common reasoning models do first, then I'll discuss how this seems to be a massive improvement in my mind. Currently, the SoTa reasoning models (o3-mini, deepseek R3, gemini 3.5 pro) have the same architecture in common. Essentially they are still just a regular Large Language Model, that has been fine-tuned to instead of directly giving a response to a query, they reason or 'think' for some time. This is done by outputting tokens, and most of them are trained to use their previous reasoning for that query in the next tokens context, which allows them to catch mistakes they made, and check their work. 
@@ -17,14 +18,20 @@ $$\text{Whats the meaning of life?}$$
 *note: this is obviously not exactly how it works, as there'd be a number of tokens as a precursor to the 'answer', though the point is the same for all those tokens as well*
 
 An LLM would provide a probability distribution akin to the following:
+
 $$\{\text{"42"}:0.1,\text{"friends"},0.25,\text{"love"},0.45,\text{"nothing"},0.2\}$$
+
 A token reasoning model would then, as their next step in reasoning, choose the next token with the highest probability:
 
+
 $$\text{The meaning of life is: love}$$
+
 Wait, but what happened to all the other options?!
 
 A *latent* reasoning model would use the entire probability distribution as input for the next reasoning step. So:
 
+
 $$\text{The meaning of life is:} \ \{\text{"42"}:0.1,\text{"friends"},0.25,\text{"love"},0.45,\text{"nothing"},0.2\}$$
+
 
 This is the benefit of the **high dimensionality of latent space**. You can persist all possible options of an answer, throughout the reasoning process. This allows for much more complex reasoning, and shows how converting it to *language is inherently 'lossy'* (as you literally 'lose' all the other possible options!).
