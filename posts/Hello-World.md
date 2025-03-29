@@ -1,6 +1,11 @@
-2025-03-29
+---
+aliases: 
+title: Hello World!
+author: Hamish
+date: 2025-03-30
+is_post: "true"
+---
 
-***
 
 # Hello!!!
 

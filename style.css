@@ -125,3 +125,24 @@ a.citation:hover {
   text-align: center; /* Center display math */
 }
 
+/* style.css */
+
+/* Style the post list on the index page */
+.post-list {
+  list-style: none;
+  padding: 0;
+}
+
+.post-list li {
+  margin-bottom: 0.8em;
+  font-size: 1.1em;
+}
+
+/* Style the date next to the post title on the index */
+.post-date {
+  font-size: 0.85em; /* Make date slightly smaller */
+  color: #777;      /* Make date grey */
+  margin-left: 0.5em; /* Add space between title and date */
+  white-space: nowrap; /* Prevent date from wrapping */
+}
+

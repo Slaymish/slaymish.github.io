@@ -1,6 +1,11 @@
-2025-03-29
+---
+aliases: 
+title: Using Latent space for reasoning
+author: Hamish
+date: 2025-03-30
+is_post: "true"
+---
 
-***
 
 So I watched this video on a new research paper from meta ([@geiping2025scaling]). I'll lead in with what common reasoning models do first, then I'll discuss how this seems to be a massive improvement in my mind. Currently, the SoTa reasoning models (o3-mini, deepseek R3, gemini 3.5 pro) have the same architecture in common. Essentially they are still just a regular Large Language Model, that has been fine-tuned to instead of directly giving a response to a query, they reason or 'think' for some time. This is done by outputting tokens, and most of them are trained to use their previous reasoning for that query in the next tokens context, which allows them to catch mistakes they made, and check their work. 
 
