@@ -8,9 +8,7 @@
   <!-- Link to a CSS file at the root of the site -->
   <link rel="stylesheet" href="/style.css">
   <!-- Pandoc will insert header stuff here (e.g., for citations) -->
-  $for(header-includes)$
-    $header-includes$
-  $endfor$
+  $header-includes$
   <!-- Add author/date metadata if present -->
   $if(author)$<meta name="author" content="$author$">$endif$
   $if(date)$<meta name="date" content="$date$">$endif$
