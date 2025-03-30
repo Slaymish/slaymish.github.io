@@ -9,7 +9,6 @@ TEMPLATE_FILE="templates/basic_template.html"
 CSS_FILE="style.css"
 
 # --- Script Logic ---
-
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
@@ -47,19 +46,20 @@ while IFS= read -r md_file; do
 
   # Get the base filename without the .md extension
   base_name=$(basename "$md_file" .md)
+
   # Define the output HTML filename
   html_file="$OUTPUT_DIR/posts/${base_name}.html"
 
   echo "  Converting '$md_file' -> '$html_file'"
 
   # Run Pandoc, expanding the BIB_FLAGS array safely
+  # --- NO --mathjax flag here ---
   pandoc "$md_file" \
     --standalone \
     --template="$TEMPLATE_FILE" \
     "${BIB_FLAGS[@]}" \
     --metadata pagetitle="$base_name" \
     --metadata is_post=true \
-    --mathjax \
     --from markdown+tex_math_dollars \
     --to html5 \
     -o "$html_file"
@@ -92,6 +92,7 @@ while IFS= read -r html_file; do
       continue
   fi
   post_title=$(basename "$html_file" .html)
+
   # Construct the path to the original Markdown file
   md_source_file="$POSTS_DIR/${post_title}.md"
   post_date="" # Initialize date variable
@@ -112,6 +113,7 @@ while IFS= read -r html_file; do
 
   # Make link relative to the index file
   post_link="posts/${post_title}.html"
+
   # Append list item HTML including the date
   BODY_CONTENT+="  <li><a href=\"$post_link\">$post_title</a> $date_display</li>\n" # Added $date_display
 done < <(find "$OUTPUT_DIR/posts" -name "*.html" | sort) # <<< Process substitution
@@ -134,9 +136,7 @@ if [ $? -ne 0 ]; then
   echo "Error generating index page '$INDEX_FILE'." >&2
   exit 1
 fi
-
 # --- End of Revised Index Generation ---
 
-echo "Build finished successfully!"
-exit 0
+echo "Build finished"
 

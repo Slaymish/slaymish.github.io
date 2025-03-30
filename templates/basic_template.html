@@ -3,15 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Use title from Markdown metadata or filename -->
   <title>$title$</title>
-  <!-- Link to a CSS file at the root of the site -->
   <link rel="stylesheet" href="/style.css">
-  <!-- Pandoc will insert header stuff here (e.g., for citations) -->
+
+  <!-- Pandoc header includes (keep for citations/other potential uses) -->
   $header-includes$
+
   <!-- Add author/date metadata if present -->
   $if(author)$<meta name="author" content="$author$">$endif$
   $if(date)$<meta name="date" content="$date$">$endif$
+
+  <!-- Manually Added MathJax Configuration and Loading -->
+  <!-- Load the main MathJax script -->
+  <script src="/js/mathjax-config.js"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <!-- Configure MathJax -->
+
+  <!-- End of Manual MathJax -->
+
 </head>
 <body>
   <div class="container">
@@ -20,7 +29,6 @@
       <h1><a href="/">My Learning Log</a></h1>
       <hr>
     </header>
-
     <main class="content">
       <!-- Conditional "Back" link: only shown if 'is_post' is true -->
       $if(is_post)$
@@ -29,7 +37,6 @@
         <a href="/">&larr; Back to Index</a>
       </nav>
       $endif$
-
       <!-- Optional: Explicitly display title/author/date from metadata -->
       $if(title)$
       <h1 class="post-title">$title$</h1>
@@ -40,11 +47,9 @@
       $if(date)$
       <p class="post-meta">Published: $date$</p>
       $endif$
-
       <!-- Pandoc will insert the main converted body content here -->
       $body$
     </main>
-
     <footer class="site-footer">
       <hr>
       <p>Made by hamish :)</p>
