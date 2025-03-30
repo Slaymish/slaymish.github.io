@@ -2,7 +2,7 @@
 aliases: 
 title: Using Latent space for reasoning
 author: Hamish
-date: 2025-03-30
+date: 2025-03-29
 is_post: "true"
 ---
 
