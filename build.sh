@@ -18,6 +18,28 @@ AUTHOR_NAME="hamish"                  # Your Name
 AUTHOR_EMAIL="hamishapps@gmail.com"
 FEED_FILE="atom.xml"                  # Output filename for the feed
 
+# --- OS Detection ---
+OS_NAME=$(uname -s)
+STAT_MOD_TIME_CMD=""
+DATE_PARSE_CMD_PREFIX=""
+DATE_FALLBACK_CMD_PREFIX="date -u -r" # Works on both GNU and BSD date for timestamp input
+
+echo "Detected OS: $OS_NAME"
+
+if [[ "$OS_NAME" == "Linux" ]]; then
+  STAT_MOD_TIME_CMD="stat -c %Y"
+  # GNU date uses -d for parsing strings
+  DATE_PARSE_CMD_PREFIX="date -u -d"
+elif [[ "$OS_NAME" == "Darwin" ]]; then
+  STAT_MOD_TIME_CMD="stat -f %m"
+  # macOS/BSD date uses -j -f <format> for parsing strings
+  DATE_PARSE_CMD_PREFIX="date -u -j -f"
+else
+  echo "Warning: Unsupported OS '$OS_NAME'. Using Linux defaults, but might fail." >&2
+  STAT_MOD_TIME_CMD="stat -c %Y"
+  DATE_PARSE_CMD_PREFIX="date -u -d"
+fi
+
 # --- Script Logic ---
 set -e
 
@@ -92,9 +114,8 @@ INDEX_FILE="$OUTPUT_DIR/index.html"
 echo "Generating index page: $INDEX_FILE"
 BODY_CONTENT="<h1>Blog Posts</h1>\n<ul class=\"post-list\">\n"
 
-# Use find with -printf to get modification time for sorting
-# %T@ gives seconds since epoch, %p gives filename
-declare -A post_data # Associative array to store data before sorting
+# Use associative array for sorting index page entries by mod time
+declare -A post_data
 
 while IFS= read -r html_file; do
   if [ -z "$html_file" ]; then continue; fi
@@ -106,9 +127,8 @@ while IFS= read -r html_file; do
   if [ -f "$md_source_file" ]; then
     # Get date from metadata first
     post_date=$(grep -i '^date:' "$md_source_file" | sed -e 's/^date:[[:space:]]*//i' -e 's/^["]//' -e 's/["]$//' -e "s/^[']//" -e "s/[']$//" | head -n 1)
-    # Get file modification time as fallback or for sorting
-    # mod_time=$(stat -c %Y "$md_source_file") # Linux stat command
-    mod_time=$(stat -f %m "$md_source_file") # macOS/BSD stat command
+    # Get file modification time using OS-specific command
+    mod_time=$($STAT_MOD_TIME_CMD "$md_source_file")
   fi
 
   date_display=""
@@ -117,8 +137,7 @@ while IFS= read -r html_file; do
   fi
   post_link="posts/${post_title}.html"
 
-  # Store data using modification time as key (or part of it)
-  # Prepending time ensures sorting works; using filename avoids collisions
+  # Store data using modification time as key
   post_data["$mod_time-$post_title"]="  <li><a href=\"$post_link\">$post_title</a> $date_display</li>\n"
 
 done < <(find "$OUTPUT_DIR/posts" -maxdepth 1 -name "*.html")
@@ -185,16 +204,27 @@ fi
 printf '  </author>\n' >> "$FEED_OUTPUT_FILE"
 
 echo "  Adding entries..."
-# Use find with stat to get modification time for sorting feed entries (macOS/BSD version)
-# Create temporary file for sorting
-TMP_SORT_FILE=$(mktemp)
-find "$POSTS_DIR" -maxdepth 1 -name "*.md" | while IFS= read -r md_file; do
-  mod_time=$(stat -f %m "$md_file") # macOS/BSD stat
-  printf "%s %s\n" "$mod_time" "$md_file" >> "$TMP_SORT_FILE"
-done
 
-# Sort the temporary file numerically and reverse, then process
-sort -nr "$TMP_SORT_FILE" | cut -d' ' -f2- | while IFS= read -r md_source_file; do
+# --- OS-Specific Sorting for Feed Entries ---
+TMP_SORT_FILE=$(mktemp)
+if [[ "$OS_NAME" == "Linux" ]]; then
+  # Use GNU find's -printf for efficiency
+  find "$POSTS_DIR" -maxdepth 1 -name "*.md" -printf "%T@ %p\n" | sort -nr > "$TMP_SORT_FILE"
+elif [[ "$OS_NAME" == "Darwin" ]]; then
+  # Use stat loop for macOS/BSD
+  find "$POSTS_DIR" -maxdepth 1 -name "*.md" | while IFS= read -r md_file; do
+    mod_time=$($STAT_MOD_TIME_CMD "$md_file")
+    printf "%s %s\n" "$mod_time" "$md_file" >> "$TMP_SORT_FILE"
+  done
+  sort -nr "$TMP_SORT_FILE" -o "$TMP_SORT_FILE" # Sort the temp file in place
+else
+  # Fallback: simple alphabetical sort if OS unknown (less ideal)
+  find "$POSTS_DIR" -maxdepth 1 -name "*.md" | sort > "$TMP_SORT_FILE"
+fi
+# --- End OS-Specific Sorting ---
+
+# Process sorted list from temporary file
+cut -d' ' -f2- "$TMP_SORT_FILE" | while IFS= read -r md_source_file; do
   if [ -z "$md_source_file" ]; then continue; fi
 
   post_basename=$(basename "$md_source_file" .md)
@@ -208,23 +238,35 @@ sort -nr "$TMP_SORT_FILE" | cut -d' ' -f2- | while IFS= read -r md_source_file; 
   if [ -f "$md_source_file" ]; then
     post_date_raw=$(grep -i '^date:' "$md_source_file" | sed -e 's/^date:[[:space:]]*//i' -e 's/^["]//' -e 's/["]$//' -e "s/^[']//" -e "s/[']$//" | head -n 1)
     if [ -n "$post_date_raw" ]; then
-      # Attempt to convert to RFC 3339 format (YYYY-MM-DDTHH:MM:SSZ)
-      # Try parsing the date string first
-      post_date_rfc3339=$(date -u -j -f "%Y-%m-%d" "$post_date_raw" +"%Y-%m-%dT00:00:00Z" 2>/dev/null) || \
-      post_date_rfc3339=$(date -u -j -f "%Y/%m/%d" "$post_date_raw" +"%Y-%m-%dT00:00:00Z" 2>/dev/null) || \
-      post_date_rfc3339=$(date -u -j -f "%d %b %Y" "$post_date_raw" +"%Y-%m-%dT00:00:00Z" 2>/dev/null) || \
-      # If parsing fails, use file modification time (macOS stat)
-      post_date_rfc3339=$(date -u -r "$(stat -f %m "$md_source_file")" +"%Y-%m-%dT%H:%M:%SZ")
+      # Attempt to convert to RFC 3339 format using OS-specific date command
+      if [[ "$OS_NAME" == "Linux" ]]; then
+        post_date_rfc3339=$($DATE_PARSE_CMD_PREFIX "$post_date_raw" +"%Y-%m-%dT00:00:00Z" 2>/dev/null)
+      elif [[ "$OS_NAME" == "Darwin" ]]; then
+        # Try multiple common formats for macOS/BSD date
+        post_date_rfc3339=$($DATE_PARSE_CMD_PREFIX "%Y-%m-%d" "$post_date_raw" +"%Y-%m-%dT00:00:00Z" 2>/dev/null) || \
+        post_date_rfc3339=$($DATE_PARSE_CMD_PREFIX "%Y/%m/%d" "$post_date_raw" +"%Y-%m-%dT00:00:00Z" 2>/dev/null) || \
+        post_date_rfc3339=$($DATE_PARSE_CMD_PREFIX "%d %b %Y" "$post_date_raw" +"%Y-%m-%dT00:00:00Z" 2>/dev/null)
+      else
+         # Fallback attempt if OS unknown
+         post_date_rfc3339=$($DATE_PARSE_CMD_PREFIX "$post_date_raw" +"%Y-%m-%dT00:00:00Z" 2>/dev/null)
+      fi
+
+      # If parsing failed OR date was empty, use file modification time
+      if [ -z "$post_date_rfc3339" ]; then
+         mod_time_secs=$($STAT_MOD_TIME_CMD "$md_source_file")
+         post_date_rfc3339=$($DATE_FALLBACK_CMD_PREFIX "$mod_time_secs" +"%Y-%m-%dT%H:%M:%SZ")
+      fi
     else
-       # If no date metadata, use file modification time (macOS stat)
-       post_date_rfc3339=$(date -u -r "$(stat -f %m "$md_source_file")" +"%Y-%m-%dT%H:%M:%SZ")
+       # If no date metadata, use file modification time
+       mod_time_secs=$($STAT_MOD_TIME_CMD "$md_source_file")
+       post_date_rfc3339=$($DATE_FALLBACK_CMD_PREFIX "$mod_time_secs" +"%Y-%m-%dT%H:%M:%SZ")
     fi
   else
     # Fallback if md file somehow missing (shouldn't happen with find)
     post_date_rfc3339=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
   fi
 
-  echo "    Adding entry for $post_title ($post_date_raw -> $post_date_rfc3339)"
+  echo "    Adding entry for $post_title (Date: $post_date_rfc3339)"
 
   # --- Generate HTML content fragment for the feed ---
   post_html_content=""
@@ -251,8 +293,6 @@ sort -nr "$TMP_SORT_FILE" | cut -d' ' -f2- | while IFS= read -r md_source_file; 
 
   # Add summary (optional, could be complex to extract, using title for now)
   summary_text="New post: $post_title" # Basic summary
-  # Example: Extract first <p> tag content (requires more robust parsing ideally)
-  # summary_text=$(echo "$post_html_content" | grep -oP '<p>\K.*?(?=</p>)' | head -n 1 || echo "New post: $post_title")
   printf '    <summary>%s</summary>\n' "$summary_text" >> "$FEED_OUTPUT_FILE"
 
   # --- Add full HTML content ---
@@ -275,4 +315,5 @@ echo "  Atom feed generated successfully."
 # --- End of Feed Generation ---
 
 echo "Build finished"
+
 
