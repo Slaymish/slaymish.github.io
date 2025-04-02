@@ -1,6 +1,6 @@
 ---
 aliases: 
-title: Why AI is ?
+title: Problems with AI
 author: Hamish
 date: 2025-03-31
 is_post: "true"
