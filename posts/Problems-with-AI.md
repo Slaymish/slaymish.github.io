@@ -5,37 +5,67 @@ author: Hamish
 date: 2025-03-31
 is_post: "true"
 ---
-I watched a video by philosophy tube called [AI is an ethical nightmare](https://www.youtube.com/watch?v=AaU6tI2pb3M). She talked about two components of AI that has the potential to harm, the actual prediction, and the application of the prediction. The example she gave that has actually affected her was the 'penis detection machines' at airports (full body X-rays). It attempts to detect anomalies, though becomes an issue for gender nonconforming and trans people, as the operator has to either select male or female before the user entered the machine. It detected penises on woman as anomalous, and make them get checked. This has the negative outcome of potentially getting outed as trans in an uncomfortable situation. She explained this is an example of an AI model **projecting its own view of the world onto its users**. As trans people weren't accounted for during the creation of it, it mishandles them.
+# AI Ethical Issues
 
-Intuitively, coming from a software engineering background, my immediate solution is to 'fix' the AI. For example, for the 'penis detector', just account for trans people in the creation of the model. This would solve this specific issue, though there are more issues which I have no solution to, that are quite inherent to AI as a industry...
+I just watched Abigail Thorn’s Philosophy Tube video, [AI is an ethical nightmare](https://www.youtube.com/watch?v=AaU6tI2pb3M). Spoiler: she’s right. Thorn breaks AI harm into two buckets:
 
-# Data 
+1. The **prediction** itself.
+    
+2. **How** that prediction gets used in the real world.
+    
 
-Data is the primary issue I have with AI. To accurately train a model, usually you need a variety of training and testing data. In some cases, like temperature prediction based on sensor data, this is quite easy and ethical.
+The example she used was airport body scanners, aka the “penis detectors.” Operators must choose **male** or **female** before you step inside. Trans and gender‑nonconforming folks get flagged as “anomalous” and subjected to pat‑downs, effectively outing them in public. This illustrates how an AI system can impose designers' narrow worldviews onto real human bodies.
 
-The issues come for models like LLM's, Image/Video Generators, and Vision models. These require a substantial variety of data, more than any one company can get from their own sources. This requires companies and individuals who are training one of these models, to find data by other means. A few of the options of data acquisition are:
+Coming from a software‑engineering background, my knee‑jerk reaction was simple: retrain the model with trans-inclusive data. But that's just a band-aid. The deeper ethical nightmare stems from the way AI systems are fundamentally designed and trained.
 
-1. Publicly accessible webpages
-2. Private website data
-3. Synthetic data
+---
 
-***
-## Publicly accessible webpages
+## Data: The Core Issue
 
-- What GPT-3 did
+Modern AI models (LLMs, image generators, vision systems) devour massive amounts of data no single entity fully controls. Companies hoover data wherever they can:
 
-## Private website data
+**1. Public Web Scrapes**
 
-- What google did for their video generator 
-- Using youtube videos (is this private?)
+- GPT style mass collection from blogs, tweets, forums. No one explicitly consented to have their personal content monetised for corporate profit.
+    
 
+**2. Semi‑Private Platforms**
 
-## Synthetic data
+- Google mined YouTube videos to train video models. Your content might be public to viewers, but that doesn’t make it a free asset for deepfake factories.
+    
 
-- Generate near unlimited data
-- Generate using an existing model (LLM etc)
-	- Pushing issue further down (where does *that* LLM get its data)
+**3. Synthetic Data**
 
+- Sounds good until you realize it's generated from already biased datasets, perpetuating biases downstream.
+    
 
+---
 
+## Genuine Solutions to this Mess
 
+"Move fast and patch later" isn't cutting it. Real fixes need to prioritize autonomy, dignity, and actual human flourishing from the outset:
+
+- **Consent-Based Data Co‑ops**: People voluntarily pool data and receive genuine benefits or payment. **No consent, no data.**
+    
+- **Participatory AI Design**: Affected communities (e.g., trans travelers) actively shape how systems handle their identities.
+    
+- **Risk‑Tiered Regulation**:
+    
+    - **Unacceptable (Ban)**: Gender verification, predictive policing, social scoring.
+        
+    - **High Risk**: Hiring, healthcare, credit scoring require external audits and mandatory human oversight.
+        
+    - **Limited**: Chatbots, recommender algorithms require transparency and clear opt-outs.
+        
+    - **Minimal**: Spell checkers, spam filters require basic transparency and oversight.
+        
+- **Right to Explanation and Compensation**: If AI decisions negatively impact you, you deserve a clear explanation, human review, and tangible compensation.
+    
+- **Ethical Audits (WOF for AI)**: Regular safety checks. Models failing standards are taken offline without excuses.
+    
+
+---
+
+### The Bottom Line
+
+We can't algorithm tweak our way out of ethical nightmares. AI must be built on **consent, respect, and transparency**, the foundations that genuinely support human flourishing instead of eroding it.
