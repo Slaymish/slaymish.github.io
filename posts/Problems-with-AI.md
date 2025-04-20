@@ -5,8 +5,6 @@ author: Hamish
 date: 2025-03-31
 is_post: "true"
 ---
-# AI Ethical Issues
-
 I just watched Abigail Thorn’s Philosophy Tube video, [AI is an ethical nightmare](https://www.youtube.com/watch?v=AaU6tI2pb3M). Spoiler: she’s right. Thorn breaks AI harm into two buckets:
 
 1. The **prediction** itself.
