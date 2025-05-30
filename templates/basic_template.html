@@ -1,64 +1,62 @@
+<!-- templates/basic_template.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>$title$</title>
+  <meta name="description" content="$abstract$">
+  <meta name="author" content="$author$">
+  <meta name="date" content="$date$">
+  <meta name="theme-color" content="#ffffff">
   <link rel="stylesheet" href="/style.css">
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico">
 
+  <!-- Atom Feed -->
+  <link href="/atom.xml" rel="alternate" type="application/atom+xml" title="My Learning Log Feed">
 
-  <!-- Pandoc header includes (keep for citations/other potential uses) -->
+  <!-- Pandoc header-includes -->
   $header-includes$
-
-  <!-- Add author/date metadata if present -->
-  $if(author)$<meta name="author" content="$author$">$endif$
-  $if(date)$<meta name="date" content="$date$">$endif$
-
-  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="My Learning Log Feed" />
-
-  <!-- Manually Added MathJax Configuration and Loading -->
-  <!-- Load the main MathJax script -->
-  <script src="/js/mathjax-config.js"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <!-- Configure MathJax -->
-
-  <!-- End of Manual MathJax -->
-
 </head>
 <body>
+  <!-- Skip link for accessibility -->
+  <a class="sr-only" href="#main-content">Skip to content</a>
+
   <div class="container">
     <header class="site-header">
-      <!-- Link the main title back to the homepage -->
       <h1><a href="/">My Learning Log</a></h1>
       <hr>
     </header>
-    <main class="content">
-      <!-- Conditional "Back" link: only shown if 'is_post' is true -->
+
+    <main id="main-content" class="content">
+      <!-- Only show on post pages -->
       $if(is_post)$
-      <nav class="post-nav">
-        <!-- Link points to the root index page -->
+      <nav class="post-nav" aria-label="Post navigation">
         <a href="/">&larr; Back to Index</a>
       </nav>
       $endif$
-      <!-- Optional: Explicitly display title/author/date from metadata -->
+
+      <!-- Post metadata -->
       $if(title)$
-      <h1 class="post-title">$title$</h1>
+        <h1 class="post-title">$title$</h1>
       $endif$
-      $if(author)$
-      <p class="post-meta">By: $author$</p>
-      $endif$
-      $if(date)$
-      <p class="post-meta">Published: $date$</p>
-      $endif$
-      <!-- Pandoc will insert the main converted body content here -->
+      <div class="post-meta">
+        $if(author)$<span>By $author$</span>$endif$
+        $if(date)$<span> • Published $date$</span>$endif$
+      </div>
+
+      <!-- Main content -->
       $body$
     </main>
-    <footer class="site-footer">
-      <hr>
+
+    <footer class="site-footer" role="contentinfo">
       <p>Made by hamish :)</p>
     </footer>
-  </div> <!-- /.container -->
+  </div>
+
+  <!-- MathJax (deferred for performance) -->
+  <script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script defer src="/js/mathjax-config.js"></script>
 </body>
 </html>
 

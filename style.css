@@ -1,155 +1,173 @@
-/* Basic Reset / Base Styles */
-body {
-  font-family: sans-serif;
-  line-height: 1.6;
+/* style.css */
+
+/* 1. Reset & Box-Sizing */
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
-  background-color: #fdfdfd;
-  color: #333;
+  box-sizing: border-box;
 }
 
-/* Container for centering content */
+/* 2. Custom Properties (Theme) */
+:root {
+  --color-background: #fdfdfd;
+  --color-surface:    #ffffff;
+  --color-text:       #333333;
+  --color-muted:      #666666;
+  --color-accent:     #007bff;
+  --color-accent-hover: #0056b3;
+  --color-border:     #eeeeee;
+  --font-sans:       'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --line-height:      1.6;
+  --max-width:        800px;
+  --gap:              1rem;
+}
+
+/* 3. Base Styles */
+html {
+  font-family: var(--font-sans);
+  line-height: var(--line-height);
+  font-size: 16px;
+  background: var(--color-background);
+  color: var(--color-text);
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 4. Container */
 .container {
-  max-width: 800px; /* Adjust as needed */
-  margin: 1em auto;
-  padding: 1em 2em;
-  background-color: #fff;
+  width: 90%;
+  max-width: var(--max-width);
+  margin: var(--gap) auto;
+  padding: var(--gap) calc(var(--gap) * 2);
+  background: var(--color-surface);
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-radius: 4px;
 }
 
-
-/* Header */
-.site-header h1 {
-  text-align: center;
+/* 5. Typography Helpers */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-text);
   margin-bottom: 0.5em;
-  margin-top: 0;
-  font-size: 2.5em;
+  line-height: 1.2;
 }
-.site-header h1 a {
-  color: #2a2a2a;
+
+p + p {
+  margin-top: 1em;
+}
+
+/* 6. Header */
+.site-header {
+  text-align: center;
+  margin-bottom: var(--gap);
+}
+.site-header h1 {
+  font-size: 2.5rem;
+}
+.site-header a {
+  color: var(--color-text);
   text-decoration: none;
 }
-.site-header hr {
-  border: 0;
-  height: 1px;
-  background-color: #eee;
-  margin-bottom: 2em;
-}
 
-/* Main Content Area */
-.content {
-  padding-bottom: 2em;
-}
-
-/* Post Navigation (Back button) */
+/* 7. Navigation */
 .post-nav {
-  margin-bottom: 1.5em;
-  font-size: 0.9em;
+  margin-bottom: var(--gap);
+  font-size: 0.9rem;
 }
 .post-nav a {
+  color: var(--color-accent);
   text-decoration: none;
-  color: #007bff;
+  transition: color 0.2s ease;
 }
 .post-nav a:hover {
+  color: var(--color-accent-hover);
   text-decoration: underline;
 }
 
-/* Post Title and Metadata */
+/* 8. Post Title & Meta */
 .post-title {
   margin-bottom: 0.25em;
-  color: #333;
 }
 .post-meta {
-  color: #666;
-  font-size: 0.9em;
-  margin-top: 0;
-  margin-bottom: 1.5em;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  margin-bottom: var(--gap);
 }
 
-/* Links */
+/* 9. Links */
 a {
-  color: #007bff;
+  color: var(--color-accent);
+  transition: color 0.2s ease, background-color 0.2s ease;
 }
 a:hover {
-  color: #0056b3;
+  color: var(--color-accent-hover);
 }
 
-/* Footer */
-.site-footer {
-  margin-top: 2em;
-  padding-top: 1em;
-  text-align: center;
-  font-size: 0.8em;
-  color: #888;
-  border-top: 1px solid #eee;
-}
-.site-footer hr {
-  display: none; /* Hide hr if using border-top */
+/* 10. Images */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1em auto;
+  border-radius: 4px;
 }
 
-/* Citation Styling */
+/* 11. Lists */
+.post-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.post-list li {
+  margin-bottom: 0.8em;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: space-between;
+}
+.post-date {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  white-space: nowrap;
+  margin-left: 0.5em;
+}
+
+/* 12. Citation & References */
 a.citation {
-  /* Standard link styling */
-  color: #007bff;
+  color: var(--color-accent);
   text-decoration: none;
-  /* Optional: slightly different look */
-  border-bottom: 1px dotted #007bff;
-  /* Prevent line breaks within the citation link */
+  border-bottom: 1px dotted var(--color-accent);
   white-space: nowrap;
 }
 a.citation:hover {
   text-decoration: underline;
-  background-color: #f0f0f0; /* Slight highlight on hover */
+  background: #f0f0f0;
 }
-
-/* Bibliography Section */
 .references {
-  margin-top: 3em;
+  margin-top: 2em;
   padding-top: 1.5em;
-  border-top: 1px solid #ccc;
-  font-size: 0.9em; /* Make bibliography slightly smaller */
+  border-top: 1px solid var(--color-border);
+  font-size: 0.9rem;
 }
-.references h2, /* Style the "References" heading if generated */
-#refs h2 { /* Pandoc often uses #refs */
-  font-size: 1.2em;
-  margin-bottom: 1em;
+.references h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5em;
 }
-.csl-entry {
-  margin-bottom: 0.8em;
-  line-height: 1.4;
+.csl-entry + .csl-entry {
+  margin-top: 0.8em;
 }
 
-/* MathJax Display Math Centering (if needed) */
-.mjx-chtml.MJXc-display {
-  margin: 1em 0;
-  display: block;
-  text-align: center; /* Center display math */
-}
-
-/* style.css */
-
-/* Style the post list on the index page */
-.post-list {
-  list-style: none;
-  padding: 0;
-}
-
-.post-list li {
-  margin-bottom: 0.8em;
-  font-size: 1.1em;
-}
-
-/* Style the date next to the post title on the index */
-.post-date {
-  font-size: 0.85em; /* Make date slightly smaller */
-  color: #777;      /* Make date grey */
-  margin-left: 0.5em; /* Add space between title and date */
-  white-space: nowrap; /* Prevent date from wrapping */
-}
-
-
-img {
-  max-width: 200px;
-  height: auto;
+/* 13. Footer */
+.site-footer {
+  margin-top: auto;
+  padding: var(--gap) 0;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  border-top: 1px solid var(--color-border);
 }
 
