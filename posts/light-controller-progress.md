@@ -88,4 +88,5 @@ For the exterior of my remote, I'm planning to 3D print a minimal case to hold a
 
 Heres a pic of my rotary controller setup on my breadboard with the LED ring light.
 
-![[controller-progress.jpg]]
+![Controller progress](controller-progress.jpg)
+

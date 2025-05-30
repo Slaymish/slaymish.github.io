@@ -101,6 +101,11 @@ else
   echo "Warning: CSS file '$CSS_FILE' not found, skipping copy."
 fi
 
+# Copy post images
+echo "Copying post images..."
+cp "$POSTS_DIR"/*.{jpg,jpeg,png,gif} "$OUTPUT_DIR/posts/" 2>/dev/null || true
+
+
 # --- Copy JS config file ---
 if [ -f "$JS_CONFIG_DIR/$JS_CONFIG_FILE" ]; then
   echo "Copying $JS_CONFIG_DIR/$JS_CONFIG_FILE to $OUTPUT_DIR/$JS_CONFIG_DIR/"
