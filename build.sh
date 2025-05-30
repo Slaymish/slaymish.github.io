@@ -101,6 +101,12 @@ else
   echo "Warning: CSS file '$CSS_FILE' not found, skipping copy."
 fi
 
+# Copy favicon
+if [ -f "favicon.ico" ]; then
+  cp favicon.ico "$OUTPUT_DIR/"
+fi
+
+
 # Copy post images
 echo "Copying post images..."
 cp "$POSTS_DIR"/*.{jpg,jpeg,png,gif} "$OUTPUT_DIR/posts/" 2>/dev/null || true
