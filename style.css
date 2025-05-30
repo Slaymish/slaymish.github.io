@@ -147,3 +147,9 @@ a.citation:hover {
   white-space: nowrap; /* Prevent date from wrapping */
 }
 
+
+img {
+  max-width: 500px;
+  height: auto;
+}
+
