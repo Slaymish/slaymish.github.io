@@ -116,7 +116,6 @@ EOF
 printf "%s" "$BODY" | pandoc \
   --standalone \
   --template="$TEMPLATE_FILE" \
-  --metadata title="Blog Index" \
   --from html \
   --to html5 \
   -o "$INDEX"
