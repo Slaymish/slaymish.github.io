@@ -86,10 +86,8 @@ In terms of what's next, I'd like to avoid having a bundle of cables on a breadb
 
 For the exterior of my remote, I'm planning to 3D print a minimal case to hold all the components in the correct positions. For example, I need to position the joystick and rotary encoder next to each other for control and have the PIR motion sensor mounted in a way that, when placed in different locations, it'll always be able to detect motion correctly. Once I have this 3D shell, I'll explore other materials I could use for the cover of all the components. I don't particularly want to use 3D printing for the visible exterior case, as it'll look and feel cheap and poorly made, which will detract from my experience of using it and my enjoyment of using this over my phone or Google Home. For the exterior shell, I'm considering using wood or plaster. These would give the remote a more polished feel, which plastic wouldn't. However, with great polish comes great difficulty, as working with wood or plaster would be significantly more complex. I'm aiming to address these changes further down the line once I have the interior, minimal 3D-printed shell.
 
-## 📸 Photos or Demo
+## 📸 Photos 
 
-<!-- 
-Drop in pics of the breadboard setup or a short video
-Even messy breadboards are great for blog posts
-Include a diagram or parts list if you want to go extra
--->
+Heres a pic of my rotary controller setup on my breadboard with the LED ring light.
+
+![[controller-progress.jpg]]
