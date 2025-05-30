@@ -25,14 +25,12 @@
     </header>
 
     <main id="main-content" class="content">
-      <!-- Only show on post pages -->
       $if(is_post)$
       <nav class="post-nav" aria-label="Post navigation">
         <a href="/">&larr; Back to Index</a>
       </nav>
       $endif$
 
-      <!-- Post metadata -->
       $if(title)$
         <h1 class="post-title">$title$</h1>
       $endif$
@@ -43,6 +41,27 @@
 
       <!-- Main content -->
       $body$
+
+      $if(is_post)$
+      <!-- Disqus comments embed -->
+      <div id="disqus_thread"></div>
+      <script>
+        var disqus_config = function () {
+          this.page.url = window.location.href;
+          this.page.identifier = window.location.pathname;
+        };
+        (function() {
+          var d = document, s = d.createElement('script');
+          s.src = 'https://hamishsblog.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+      <noscript>
+        Please enable JavaScript to view the
+        <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+      </noscript>
+      $endif$
     </main>
 
     <footer class="site-footer" role="contentinfo">
@@ -53,6 +72,9 @@
   <!-- MathJax (deferred for performance) -->
   <script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <script defer src="/js/mathjax-config.js"></script>
+
+  <!-- Disqus comment‐count script -->
+  <script id="dsq-count-scr" src="//hamishsblog.disqus.com/count.js" async></script>
 </body>
 </html>
 

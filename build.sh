@@ -96,7 +96,7 @@ while IFS= read -r html; do
   fi
   disp=""
   [ -n "$date" ] && disp="<span class=\"post-date\">($date)</span>"
-  PD["$mtime-$name"]="<li><a href=\"posts/$name.html\">$name</a> $disp</li>"
+  PD["$mtime-$name"]="<li><a href=\"posts/$name.html#disqus_thread\" data-disqus-identifier=\"$name\">$name</a> $disp</li>"
 done < <(find "$OUTPUT_DIR/posts" -maxdepth 1 -name "*.html")
 
 for key in $(printf "%s\n" "${!PD[@]}" | sort -nr); do
