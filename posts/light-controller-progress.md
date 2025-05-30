@@ -1,6 +1,6 @@
 ---
 aliases: 
-title: Progress Update: ESP32 Controller for Smart Lighting
+title: "Progress Update: ESP32 Controller for Smart Lighting"
 author: Hamish
 date: 2025-05-30
 is_post: "true"
