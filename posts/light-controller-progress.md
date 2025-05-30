@@ -6,8 +6,6 @@ date: 2025-05-30
 is_post: "true"
 ---
 
-# 🕹️ Progress Update: ESP32 Controller for Smart Lighting
-
 ## 🧪 Why I Started This Project
 
 I've had my WiFi-controlled Tapo lights for a couple of years, and I enjoy the ability to get the vibe in my room *just* right. For instance, as I'm winding down for bed, I can set them to a dim, warm orange, and when I wake up, I can make them turn on automatically at full brightness in a daylight colour. The main issue I've found with it is that I currently have two forms of control: either through the Tapo app on my phone or by speaking commands to my Google Home Mini. Neither of these options seems optimal to me, as I've experienced this in several instances. For example, if my phone is in another room, or it's late at night, and I don't want to yell across the room to turn off my lights. Of course, this problem has been solved for non-WiFi-controlled lights with a simple wall switch. 
