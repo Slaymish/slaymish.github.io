@@ -1,6 +1,7 @@
 /* style.css */
 
 /* 1. Reset & Box-Sizing */
+/* Bootstrap handles this with Reboot
 *,
 *::before,
 *::after {
@@ -8,6 +9,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+*/
 
 /* 2. Custom Properties (Theme) */
 :root {
@@ -40,6 +42,7 @@ body {
 }
 
 /* 4. Container */
+/* Bootstrap provides .container and .container-fluid
 .container {
   width: 90%;
   max-width: var(--max-width);
@@ -49,20 +52,24 @@ body {
   box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* Soften existing shadow */
   border-radius: 4px;
 }
+*/
 
 /* 5. Typography Helpers */
+/* Bootstrap handles heading styles
 h1, h2, h3, h4, h5, h6 {
   color: var(--color-text);
   margin-bottom: 0.5em;
   margin-top: 1.0em;
   line-height: 1.3;
 }
+*/
 
 p + p {
   margin-top: 1em;
 }
 
 /* 6. Header */
+/* Bootstrap utilities will be used for this
 .site-header {
   text-align: center;
   margin-bottom: var(--gap);
@@ -81,8 +88,10 @@ p + p {
   background: var(--color-border);
   margin-top: var(--gap); /* Ensure it has space from title */
 }
+*/
 
 /* 7. Navigation */
+/* Bootstrap navs or buttons will be used
 .post-nav {
   margin-bottom: var(--gap);
   font-size: 0.9rem;
@@ -96,6 +105,7 @@ p + p {
   color: var(--color-accent-hover);
   text-decoration: underline;
 }
+*/
 
 /* 8. Post Title & Meta */
 .post-title {
@@ -172,34 +182,39 @@ a.citation:hover {
 /* 13. Footer */
 .site-footer {
   margin-top: auto;
-  padding: var(--gap) 0;
+  /* padding: var(--gap) 0; Bootstrap spacing utilities can handle this */
   text-align: center;
   font-size: 0.8rem;
   color: var(--color-muted);
-  border-top: 1px solid var(--color-border);
+  /* border-top: 1px solid var(--color-border); Bootstrap can handle this if needed */
 }
 
 /* 14. Responsive Adjustments */
+/* Bootstrap handles responsive design through its grid system, utilities, and component styling.
+   Custom responsive adjustments here might conflict or be redundant.
+   Review after applying Bootstrap classes to HTML.
+*/
+/*
 @media (max-width: 768px) {
   body {
-    font-size: 15px; /* Slightly reduce base font size for mobile */
+    font-size: 15px;
   }
 
   .container {
     width: 95%;
-    padding: var(--gap) var(--gap); /* Reduce horizontal padding */
-    margin-top: 0; /* Remove top margin for mobile */
-    margin-bottom: 0; /* Remove bottom margin for mobile */
-    border-radius: 0; /* Optional: Full width on mobile */
-    box-shadow: none; /* Optional: Remove shadow on mobile for cleaner look */
+    padding: var(--gap) var(--gap);
+    margin-top: 0;
+    margin-bottom: 0;
+    border-radius: 0;
+    box-shadow: none;
   }
 
   .site-header h1 {
-    font-size: 2rem; /* Reduce header font size */
+    font-size: 2rem;
   }
 
   h1, .post-title {
-    font-size: 1.8rem; /* Adjust post titles */
+    font-size: 1.8rem;
   }
 
   h2 {
@@ -211,31 +226,31 @@ a.citation:hover {
   }
 
   .post-list li {
-    font-size: 1rem; /* Adjust font size of post list items */
-    flex-direction: column; /* Stack date below title */
+    font-size: 1rem;
+    flex-direction: column;
     align-items: flex-start;
   }
 
   .post-date {
     margin-left: 0;
-    margin-top: 0.25em; /* Add a little space above the date */
+    margin-top: 0.25em;
     font-size: 0.8rem;
   }
 
-  /* Make sure tap targets are easy to hit */
   a {
-    padding: 0.25em 0; /* Add a little vertical padding to links if they are inline */
+    padding: 0.25em 0;
   }
 
   .post-nav a {
-     padding: 0.5em 0.25em; /* Increase tap area for back navigation */
+     padding: 0.5em 0.25em;
   }
 
   img {
-    margin-left: 0; /* Remove horizontal auto margins if they exist */
+    margin-left: 0;
     margin-right: 0;
   }
 }
+*/
 
 /* Subtle adjustments for overall polish */
 /* .container rule for box-shadow is modified above directly */
@@ -245,13 +260,15 @@ a.citation:hover {
 
 .site-footer {
   margin-top: auto; /* Pushes footer to the bottom */
-  padding: calc(var(--gap) * 1.5) 0; /* Increase footer padding a bit */
+  /* padding: calc(var(--gap) * 1.5) 0; Bootstrap spacing utilities can handle this */
 }
 
 /* Add some margin below the main content before the footer */
+/* Bootstrap spacing utilities can handle this
 #main-content {
   margin-bottom: var(--gap);
 }
+*/
 
 pre {
   overflow-x: auto; /* Allows horizontal scrolling */
@@ -266,16 +283,18 @@ code {
   font-size: 0.9em;     /* Adjusts font size within code blocks */
 }
 
+/* Styles for RSS subscribe button are now handled by Bootstrap classes in build.sh */
+/*
 .rss-subscribe {
   margin-top: 1.5em;
   margin-bottom: 1em;
-  text-align: center; /* Center the button */
+  text-align: center;
 }
 
 .rss-subscribe a {
   display: inline-block;
   background-color: var(--color-accent);
-  color: var(--color-surface); /* Text color that contrasts with accent */
+  color: var(--color-surface);
   padding: 0.75em 1.5em;
   border-radius: 4px;
   text-decoration: none;
@@ -289,3 +308,4 @@ code {
   color: var(--color-surface);
   text-decoration: none;
 }
+*/

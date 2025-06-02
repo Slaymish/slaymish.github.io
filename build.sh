@@ -119,12 +119,20 @@ copy_static_assets() {
   fi
   shopt -u nullglob # Reset nullglob
 
-  # Copy JS config
-  local js_config_path="$JS_CONFIG_DIR/$JS_CONFIG_FILE"
-  if [ -f "$js_config_path" ]; then
-    cp -v "$js_config_path" "$OUTPUT_DIR/$JS_CONFIG_DIR/"
+  # Copy JS files from JS_CONFIG_DIR
+  if [ -d "$JS_CONFIG_DIR" ]; then
+    echo "Copying JavaScript files from $JS_CONFIG_DIR to $OUTPUT_DIR/$JS_CONFIG_DIR/"
+    # Ensure the target directory exists
+    mkdir -p "$OUTPUT_DIR/$JS_CONFIG_DIR"
+    # Copy all .js files
+    local js_file
+    for js_file in "$JS_CONFIG_DIR"/*.js; do
+      if [ -f "$js_file" ]; then
+        cp -v "$js_file" "$OUTPUT_DIR/$JS_CONFIG_DIR/"
+      fi
+    done
   else
-    echo "Warning: JavaScript config file '$js_config_path' not found. Skipping."
+    echo "Warning: JavaScript directory '$JS_CONFIG_DIR' not found. Skipping JS files."
   fi
   echo "Static assets copying complete."
 }
@@ -192,9 +200,8 @@ build_index_page() {
 
   # Add RSS subscribe button
   body_content+="$(cat <<'EOF'
-  <div class="rss-subscribe">
-    <a href="/atom.xml" title="Subscribe via RSS">
-      <!-- Ensure your SVG or text for the button is within this anchor -->
+  <div class="rss-subscribe text-center my-4">
+    <a href="/atom.xml" title="Subscribe via RSS" class="btn btn-outline-primary">
       Subscribe to RSS Feed
     </a>
   </div>
