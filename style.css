@@ -46,7 +46,7 @@ body {
   margin: var(--gap) auto;
   padding: var(--gap) calc(var(--gap) * 2);
   background: var(--color-surface);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* Soften existing shadow */
   border-radius: 4px;
 }
 
@@ -172,3 +172,76 @@ a.citation:hover {
   border-top: 1px solid var(--color-border);
 }
 
+/* 14. Responsive Adjustments */
+@media (max-width: 768px) {
+  body {
+    font-size: 15px; /* Slightly reduce base font size for mobile */
+  }
+
+  .container {
+    width: 95%;
+    padding: var(--gap) var(--gap); /* Reduce horizontal padding */
+    margin-top: 0; /* Remove top margin for mobile */
+    margin-bottom: 0; /* Remove bottom margin for mobile */
+    border-radius: 0; /* Optional: Full width on mobile */
+    box-shadow: none; /* Optional: Remove shadow on mobile for cleaner look */
+  }
+
+  .site-header h1 {
+    font-size: 2rem; /* Reduce header font size */
+  }
+
+  h1, .post-title {
+    font-size: 1.8rem; /* Adjust post titles */
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+  }
+
+  .post-list li {
+    font-size: 1rem; /* Adjust font size of post list items */
+    flex-direction: column; /* Stack date below title */
+    align-items: flex-start;
+  }
+
+  .post-date {
+    margin-left: 0;
+    margin-top: 0.25em; /* Add a little space above the date */
+    font-size: 0.8rem;
+  }
+
+  /* Make sure tap targets are easy to hit */
+  a {
+    padding: 0.25em 0; /* Add a little vertical padding to links if they are inline */
+  }
+
+  .post-nav a {
+     padding: 0.5em 0.25em; /* Increase tap area for back navigation */
+  }
+
+  img {
+    margin-left: 0; /* Remove horizontal auto margins if they exist */
+    margin-right: 0;
+  }
+}
+
+/* Subtle adjustments for overall polish */
+/* .container rule for box-shadow is modified above directly */
+
+/* Ensure footer is always at the bottom and has some space */
+/* body rule for flex is already present globally */
+
+.site-footer {
+  margin-top: auto; /* Pushes footer to the bottom */
+  padding: calc(var(--gap) * 1.5) 0; /* Increase footer padding a bit */
+}
+
+/* Add some margin below the main content before the footer */
+#main-content {
+  margin-bottom: var(--gap);
+}
