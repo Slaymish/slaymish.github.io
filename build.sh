@@ -408,17 +408,28 @@ main() {
 
 # --- Function to generate search data JSON ---
 generate_search_data() {
+  set -x # Trace execution
   echo "Generating search data: $OUTPUT_DIR/search-data.json..."
   local search_data_file="$OUTPUT_DIR/search-data.json"
   local first_entry=true
 
   # Start JSON array
-  printf "[\n" > "$search_data_file"
+  if ! printf "[\n" > "$search_data_file"; then
+    echo "Error: Failed to write to search data file: $search_data_file" >&2
+    set +x # Disable trace before exiting
+    return 1 # or exit 1 if this function is critical enough
+  fi
 
-  local md_file slug post_title post_href post_content
+  local md_file slug post_title post_href post_content pandoc_output pandoc_exit_code
   # Use similar logic as process_markdown_posts to find markdown files
   while IFS= read -r md_file; do
     [[ -z "$md_file" ]] && continue # Skip empty lines if any
+
+    if [ ! -f "$md_file" ] || [ ! -r "$md_file" ]; then
+      echo "    Error: Markdown file '$md_file' not found or is not readable. Skipping for search data." >&2
+      continue
+    fi
+
     slug=$(basename "$md_file" .md)
 
     post_title=$(get_metadata_value "$md_file" "title")
@@ -433,12 +444,19 @@ generate_search_data() {
     post_href="/posts/${slug}.html"
 
     # Convert markdown content to plain text using pandoc
-    # Added error handling for pandoc conversion
-    if ! post_content=$(pandoc -f markdown -t plain "$md_file"); then
-      echo "    Warning: Failed to convert '$md_file' to plain text for search data. Skipping content for this post." >&2
+    # Capture stdout and stderr together
+    pandoc_output=$(pandoc -f markdown -t plain "$md_file" 2>&1)
+    pandoc_exit_code=$?
+
+    if [ $pandoc_exit_code -ne 0 ]; then
+      echo "    Warning: pandoc failed to convert '$md_file' to plain text for search data. Error code: $pandoc_exit_code. Output: $pandoc_output" >&2
       post_content="" # Set to empty if conversion fails
+    else
+      post_content="$pandoc_output"
     fi
+
     # JSON escape content: escape backslashes, double quotes, and newlines
+    # Ensure this handles the output of pandoc correctly.
     post_content=$(echo "$post_content" | sed 's/\\/\\\\/g' | sed 's/"/\\"/g' | sed 's/\n/\\n/g' | sed "s/'/\\\'/g")
 
     # Add comma before adding a new entry, except for the first one
@@ -454,12 +472,17 @@ generate_search_data() {
     printf "    \"title\": \"%s\",\n" "$post_title" >> "$search_data_file"
     printf "    \"href\": \"%s\",\n" "$post_href" >> "$search_data_file"
     printf "    \"content\": \"%s\"\n" "$post_content" >> "$search_data_file"
-    printf "  }" >> "$search_data_file"
+    if ! printf "  }" >> "$search_data_file"; then
+      echo "Error: Failed to append to search data file: $search_data_file" >&2
+      # Decide if you want to skip this entry or stop the whole process
+    fi
 
   done < <(find "$POSTS_DIR" -maxdepth 1 -name "*.md" -type f)
 
   # End JSON array
-  printf "\n]\n" >> "$search_data_file"
+  if ! printf "\n]\n" >> "$search_data_file"; then
+    echo "Error: Failed to finalize search data file: $search_data_file" >&2
+  fi
 
   # Copy search-data.json to js/ directory as well if js/search.js expects it there
   # Although fetching from root /search-data.json is also fine.
@@ -468,6 +491,7 @@ generate_search_data() {
   # cp "$search_data_file" "$OUTPUT_DIR/$JS_CONFIG_DIR/"
 
   echo "Search data generated successfully at $search_data_file"
+  set +x # Disable trace
 }
 
 
