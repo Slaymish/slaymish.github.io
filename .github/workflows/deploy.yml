@@ -28,13 +28,23 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Set up Pandoc
+
+      - name: Cache Pandoc and other apt packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            /var/cache/apt/archives
+            /var/lib/apt/lists
+          key: ${{ runner.os }}-apt-pandoc-${{ hashFiles('**/lockfiles') }} # Fallback key, consider more specific if needed
+          restore-keys: |
+            ${{ runner.os }}-apt-pandoc-
+
+      - name: Set up Pandoc and Perl
         run: |
           sudo apt-get update
-          sudo apt-get install -y pandoc xz-utils
-          wget https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.18.2/pandoc-crossref-Linux-X64.tar.xz
-          sudo tar -xJf pandoc-crossref-Linux-X64.tar.xz -C /usr/local/bin
-          rm pandoc-crossref-Linux-X64.tar.xz
+          # Install pandoc. Perl is usually pre-installed on ubuntu-latest.
+          # If Perl were missing, add: sudo apt-get install -y perl
+          sudo apt-get install -y pandoc
       - name: Make build script executable
         run: chmod +x ./build.sh
       - name: Build Site
