@@ -17,6 +17,9 @@
 
   <!-- Pandoc header-includes -->
   $header-includes$
+
+  <!-- Fuse.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
@@ -42,6 +45,7 @@
   </nav>
 
   <div class="container py-4">
+    <div id="search-results" class="mt-4"></div> <!-- Search results will be displayed here -->
     <!-- The old header is removed, navbar serves as header -->
     <main id="main-content" class="py-4">
       $if(is_post)$

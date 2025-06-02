@@ -401,9 +401,75 @@ main() {
   copy_static_assets
   build_index_page
   generate_atom_feed
+  generate_search_data # Add this call
 
   echo "Build finished successfully."
 }
+
+# --- Function to generate search data JSON ---
+generate_search_data() {
+  echo "Generating search data: $OUTPUT_DIR/search-data.json..."
+  local search_data_file="$OUTPUT_DIR/search-data.json"
+  local first_entry=true
+
+  # Start JSON array
+  printf "[\n" > "$search_data_file"
+
+  local md_file slug post_title post_href post_content
+  # Use similar logic as process_markdown_posts to find markdown files
+  while IFS= read -r md_file; do
+    [[ -z "$md_file" ]] && continue # Skip empty lines if any
+    slug=$(basename "$md_file" .md)
+
+    post_title=$(get_metadata_value "$md_file" "title")
+    if [ -z "$post_title" ]; then
+        echo "    Info: No title found in frontmatter for '$md_file' for search data. Using filename as title." >&2
+        post_title="$slug"
+    fi
+    # Ensure title is JSON escaped (simple version, might need more robust escaping)
+    post_title=$(echo "$post_title" | sed 's/"/\\"/g' | sed "s/'/\\\'/g")
+
+
+    post_href="/posts/${slug}.html"
+
+    # Convert markdown content to plain text using pandoc
+    # Added error handling for pandoc conversion
+    if ! post_content=$(pandoc -f markdown -t plain "$md_file"); then
+      echo "    Warning: Failed to convert '$md_file' to plain text for search data. Skipping content for this post." >&2
+      post_content="" # Set to empty if conversion fails
+    fi
+    # JSON escape content: escape backslashes, double quotes, and newlines
+    post_content=$(echo "$post_content" | sed 's/\\/\\\\/g' | sed 's/"/\\"/g' | sed 's/\n/\\n/g' | sed "s/'/\\\'/g")
+
+    # Add comma before adding a new entry, except for the first one
+    if [ "$first_entry" = true ]; then
+      first_entry=false
+    else
+      printf ",\n" >> "$search_data_file"
+    fi
+
+    # Append entry to JSON file
+    # Using printf for better control over formatting and to avoid issues with special characters in variables.
+    printf "  {\n" >> "$search_data_file"
+    printf "    \"title\": \"%s\",\n" "$post_title" >> "$search_data_file"
+    printf "    \"href\": \"%s\",\n" "$post_href" >> "$search_data_file"
+    printf "    \"content\": \"%s\"\n" "$post_content" >> "$search_data_file"
+    printf "  }" >> "$search_data_file"
+
+  done < <(find "$POSTS_DIR" -maxdepth 1 -name "*.md" -type f)
+
+  # End JSON array
+  printf "\n]\n" >> "$search_data_file"
+
+  # Copy search-data.json to js/ directory as well if js/search.js expects it there
+  # Although fetching from root /search-data.json is also fine.
+  # For now, let's assume js/search.js will fetch /search-data.json from the root of _site.
+  # If it needs to be in _site/js/, uncomment the next line:
+  # cp "$search_data_file" "$OUTPUT_DIR/$JS_CONFIG_DIR/"
+
+  echo "Search data generated successfully at $search_data_file"
+}
+
 
 # Execute main function
 main
