@@ -205,7 +205,7 @@ EOF
   printf "%s" "$body_content" | pandoc \
     --standalone \
     --template="$TEMPLATE_FILE" \
-    --metadata title="$SITE_TITLE - Home" \
+    --metadata title="Home" \
     --from html \
     --to html5 \
     -o "$index_html_path"

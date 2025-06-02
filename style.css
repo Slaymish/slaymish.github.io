@@ -55,7 +55,7 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-text);
   margin-bottom: 0.5em;
   margin-top: 1.0em;
-  line-height: 1.2;
+  line-height: 1.3;
 }
 
 p + p {
@@ -73,6 +73,13 @@ p + p {
 .site-header a {
   color: var(--color-text);
   text-decoration: none;
+}
+
+.site-header hr {
+  border: 0;
+  height: 1px;
+  background: var(--color-border);
+  margin-top: var(--gap); /* Ensure it has space from title */
 }
 
 /* 7. Navigation */
@@ -125,7 +132,7 @@ img {
   padding: 0;
 }
 .post-list li {
-  margin-bottom: 0.8em;
+  margin-bottom: 1.2em;
   font-size: 1.1rem;
   display: flex;
   justify-content: space-between;
@@ -244,4 +251,41 @@ a.citation:hover {
 /* Add some margin below the main content before the footer */
 #main-content {
   margin-bottom: var(--gap);
+}
+
+pre {
+  overflow-x: auto; /* Allows horizontal scrolling */
+  padding: 1em;      /* Adds some padding around the code */
+  background-color: #f8f8f8; /* Light background for the code block */
+  border: 1px solid #ddd; /* Optional: adds a border */
+  border-radius: 4px;   /* Optional: rounds the corners */
+}
+
+code {
+  font-family: monospace; /* Ensures a monospaced font for code */
+  font-size: 0.9em;     /* Adjusts font size within code blocks */
+}
+
+.rss-subscribe {
+  margin-top: 1.5em;
+  margin-bottom: 1em;
+  text-align: center; /* Center the button */
+}
+
+.rss-subscribe a {
+  display: inline-block;
+  background-color: var(--color-accent);
+  color: var(--color-surface); /* Text color that contrasts with accent */
+  padding: 0.75em 1.5em;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.rss-subscribe a:hover,
+.rss-subscribe a:focus {
+  background-color: var(--color-accent-hover);
+  color: var(--color-surface);
+  text-decoration: none;
 }
