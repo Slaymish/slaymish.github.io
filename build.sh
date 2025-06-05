@@ -138,9 +138,7 @@ copy_static_assets() {
 # --- Function to build the index HTML page ---
 build_index_page() {
   local index_html_path="$OUTPUT_DIR/index.html"
-  echo "Building index page: $index_html_path"
-
-  local body_content="<section class=\"hero\"><h1 class=\"display-4 mb-3\">Welcome to $SITE_TITLE</h1><p class=\"lead\">Documenting my learning journey one post at a time.</p><a href=\"#posts\" class=\"btn btn-primary\">Read Latest Posts</a></section><h2 id=\"posts\" class=\"mt-5\">Recent Posts</h2><ul class=\"post-list\">"
+  local body_content="<section class=\"hero text-center\"><h1 class=\"text-4xl font-bold mb-3\">Welcome to $SITE_TITLE</h1><p class=\"text-lg mb-4\">Documenting my learning journey one post at a time.</p><a href=\"#posts\" class=\"inline-block bg-purple-700 text-white px-5 py-2 rounded hover:bg-purple-800\">Read Latest Posts</a></section><h2 id=\"posts\" class=\"text-2xl font-semibold mt-10\">Recent Posts</h2><ul class=\"post-list\">"
   declare -A post_metadata_map # Renamed from PD for clarity
 
   # Temporary array to hold sortable keys

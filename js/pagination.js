@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Previous Button
     const prevButton = document.createElement('button');
     prevButton.textContent = 'Previous';
-    prevButton.classList.add('btn', 'btn-outline-primary', 'me-2');
+    prevButton.classList.add('px-3', 'py-1', 'border', 'border-purple-700', 'text-purple-700', 'rounded', 'hover:bg-purple-700', 'hover:text-white', 'mr-2');
     prevButton.disabled = currentPage === 1;
     prevButton.addEventListener('click', () => {
       if (currentPage > 1) {
@@ -59,9 +59,9 @@ document.addEventListener('DOMContentLoaded', function () {
     for (let i = 1; i <= totalPages; i++) {
       const pageButton = document.createElement('button');
       pageButton.textContent = i;
-      pageButton.classList.add('btn', 'btn-outline-primary', 'me-2');
+      pageButton.classList.add('px-3', 'py-1', 'border', 'border-purple-700', 'text-purple-700', 'rounded', 'hover:bg-purple-700', 'hover:text-white', 'mr-2');
       if (i === currentPage) {
-        pageButton.classList.add('active');
+        pageButton.classList.add('bg-purple-700','text-white');
         pageButton.disabled = true;
       }
       pageButton.addEventListener('click', () => displayPage(i, items));
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Next Button
     const nextButton = document.createElement('button');
     nextButton.textContent = 'Next';
-    nextButton.classList.add('btn', 'btn-outline-primary');
+    nextButton.classList.add('px-3', 'py-1', 'border', 'border-purple-700', 'text-purple-700', 'rounded', 'hover:bg-purple-700', 'hover:text-white');
     nextButton.disabled = currentPage === totalPages;
     nextButton.addEventListener('click', () => {
       if (currentPage < totalPages) {
