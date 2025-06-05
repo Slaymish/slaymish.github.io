@@ -13,12 +13,12 @@
 /* 2. Custom Properties (Theme) */
 :root {
   /* Base colour palette */
-  --color-background: #f5f4f9;        /* subtle violet tint */
+  --color-background: #f5f0ff;        /* light lavender background */
   --color-surface:    #ffffff;
   --color-text:       #262626;
   --color-muted:      #555555;
-  --color-accent:     #6f42c1;        /* custom purple accent */
-  --color-accent-hover: #52349d; /* darker shade for hover states */
+  --color-accent:     #7c3aed;        /* vibrant purple accent */
+  --color-accent-hover: #5b21b6; /* darker shade for hover states */
   --color-border:     #dddddd;
 
   --font-sans:       'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -51,6 +51,11 @@ body {
   background: var(--color-surface);
   box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* Soften existing shadow */
   border-radius: 4px;
+}
+
+nav .container {
+  background: transparent;
+  box-shadow: none;
 }
 
 /* 5. Typography Helpers */

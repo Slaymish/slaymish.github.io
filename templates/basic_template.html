@@ -20,7 +20,12 @@
 
 </head>
 <body>
-  <nav class="bg-purple-700 text-white shadow mb-4"><div class="container mx-auto flex items-center justify-between p-4"><a class="font-semibold text-lg" href="/">My Learning Log</a><a class="text-sm hover:underline" href="/atom.xml">RSS Feed</a></div></nav>
+  <nav class="bg-purple-700 text-white shadow mb-4">
+    <div class="max-w-3xl mx-auto flex items-center justify-between p-4">
+      <a class="font-semibold text-lg" href="/">My Learning Log</a>
+      <a class="text-sm hover:underline" href="/atom.xml">RSS Feed</a>
+    </div>
+  </nav>
 
   <div class="max-w-3xl mx-auto p-4">
     <!-- The old header is removed, navbar serves as header -->
@@ -31,8 +36,10 @@
       </nav>
       $endif$
 
-      $if(title)$
-        <h1 class="post-title">$title$</h1>
+      $if(is_post)$
+        $if(title)$
+          <h1 class="post-title">$title$</h1>
+        $endif$
       $endif$
       <div class="post-meta">
         $if(author)$<span>By $author$</span>$endif$

@@ -200,7 +200,8 @@ build_index_page() {
   printf "%s" "$body_content" | pandoc \
     --standalone \
     --template="$TEMPLATE_FILE" \
-    --metadata title="Home" \
+    --metadata title="$SITE_TITLE" \
+    --metadata is_index=true \
     --from html \
     --to html5 \
     -o "$index_html_path"
