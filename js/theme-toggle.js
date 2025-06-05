@@ -10,7 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  const stored = localStorage.getItem('theme');
+  let stored = null;
+  try {
+    stored = localStorage.getItem('theme');
+  } catch (e) {
+    // ignore if storage access is blocked
+  }
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const initial = stored || (prefersDark ? 'dark' : 'light');
   applyTheme(initial);
@@ -20,7 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const isDark = root.getAttribute('data-theme') === 'dark';
       const newTheme = isDark ? 'light' : 'dark';
       applyTheme(newTheme);
-      localStorage.setItem('theme', newTheme);
+      try {
+        localStorage.setItem('theme', newTheme);
+      } catch (e) {
+        // ignore if storage access is blocked
+      }
     });
   }
 });
