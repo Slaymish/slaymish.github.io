@@ -169,12 +169,14 @@ build_index_page() {
     # Prepending a sort key prefix to ensure dates are sorted before mtime-only entries if mixed.
     local sort_key
     if [ -n "$post_date" ]; then
-      # Attempt to convert date to sortable format (YYYYMMDD or timestamp)
-      # This is a simplification; robust date parsing for sorting can be complex.
-      # For now, using it as is, assuming consistent format or relying on mtime for accuracy.
-      sort_key="date_${post_date}_${post_mtime}" # Include mtime to break ties or if date format isn't perfectly sortable
+      # Use date for sorting and include mtime and post name to ensure uniqueness
+      # Combining these prevents duplicate keys when multiple posts share the same
+      # date and file modification time (e.g., when checked into git together).
+      sort_key="date_${post_date}_${post_mtime}_${post_name}"
     else
-      sort_key="mtime_${post_mtime}"
+      # When no date is provided, fall back to modification time plus the post
+      # name so each entry has a unique sort key.
+      sort_key="mtime_${post_mtime}_${post_name}"
     fi
 
     local display_date_span=""
