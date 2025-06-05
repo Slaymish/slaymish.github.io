@@ -9,7 +9,6 @@ CSS_FILE="style.css"
 
 # --- Add JS Config File ---
 JS_CONFIG_DIR="js"
-JS_CONFIG_FILE="mathjax-config.js"
 
 # --- NEW Feed Configuration ---
 SITE_URL="https://slaymish.github.io"
@@ -50,7 +49,6 @@ setup_directories_and_template() {
 
   echo "Verifying template file..."
   if [ ! -f "$TEMPLATE_FILE" ]; then
-  echo "Error: template '$TEMPLATE_FILE' not found." >&2
     echo "Error: template '$TEMPLATE_FILE' not found." >&2
     exit 1
   fi
@@ -190,8 +188,7 @@ build_index_page() {
   # Using process substitution with sort.
   # Sorting in reverse order (newest first).
   local sorted_keys
-  IFS=$'\n' sorted_keys=($(printf "%s\n" "${sortable_keys[@]}" | sort -r))
-  unset IFS
+  mapfile -t sorted_keys < <(printf '%s\n' "${sortable_keys[@]}" | sort -r)
 
   for key in "${sorted_keys[@]}"; do
     body_content+="${post_metadata_map[$key]}"
@@ -223,7 +220,8 @@ EOF
 # Arguments: $1 = file_path, $2 = field_name (e.g., "title", "date")
 get_metadata_value() {
   local file_path="$1"
-  local field_name_lower=$(echo "$2" | tr '[:upper:]' '[:lower:]') # Ensure lowercase for case-insensitive grep
+  local field_name_lower
+  field_name_lower=$(echo "$2" | tr '[:upper:]' '[:lower:]') # Ensure lowercase for case-insensitive grep
   local value
   # Regex:
   # - (?i): case-insensitive match for field_name
