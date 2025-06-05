@@ -13,13 +13,15 @@
 
 /* 2. Custom Properties (Theme) */
 :root {
-  --color-background: #fdfdfd;
+  /* Base colour palette */
+  --color-background: #f5f4f9;        /* subtle violet tint */
   --color-surface:    #ffffff;
-  --color-text:       #333333;
-  --color-muted:      #666666;
-  --color-accent:     #007bff;
-  --color-accent-hover: #0056b3;
-  --color-border:     #eeeeee;
+  --color-text:       #262626;
+  --color-muted:      #555555;
+  --color-accent:     #6f42c1;        /* custom purple accent */
+  --color-accent-hover: #52349d; /* darker shade for hover states */
+  --color-border:     #dddddd;
+
   --font-sans:       'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --line-height:      1.6;
   --max-width:        800px;
@@ -277,5 +279,39 @@ pre {
 code {
   font-family: monospace; /* Ensures a monospaced font for code */
   font-size: 0.9em;     /* Adjusts font size within code blocks */
+}
+
+/* 15. Bootstrap Colour Overrides */
+.bg-primary {
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-hover)) !important;
+}
+.btn-primary {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+}
+.btn-outline-primary {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  color: #fff;
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.navbar-dark .navbar-nav .nav-link {
+  color: #ffffffcc;
+}
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:focus {
+  color: #ffffff;
+}
+.navbar-brand {
+  font-weight: 600;
 }
 
