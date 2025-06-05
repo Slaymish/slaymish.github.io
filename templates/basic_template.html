@@ -10,7 +10,7 @@
   <meta name="theme-color" content="#ffffff">
   <link rel="stylesheet" href="/style.css">
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" href="favicon.ico">
 
   <!-- Atom Feed -->
   <link href="/atom.xml" rel="alternate" type="application/atom+xml" title="My Learning Log Feed">
@@ -27,7 +27,7 @@
     </div>
   </nav>
 
-  <div class="max-w-3xl mx-auto p-4">
+  <div class="max-w-3xl mx-auto p-4 flex-grow">
     <!-- The old header is removed, navbar serves as header -->
     <main id="main-content" class="py-4">
       $if(is_post)$
@@ -91,13 +91,14 @@
       <!-- Pagination buttons will be inserted here by js/pagination.js -->
     </div>
 
-    <footer class="mt-auto border-t py-3 text-center bg-gray-50">
-      <div class="max-w-3xl mx-auto">
-        <p class="mb-1">© $year$ My Learning Log</p>
-        <p class="mb-0 text-muted small">Made by hamish :)</p>
-      </div>
-    </footer>
-  </div>
+    </div>
+
+  <footer class="mt-auto border-t py-3 text-center bg-gray-50 w-full">
+    <div class="max-w-3xl mx-auto">
+      <p class="mb-1">© $year$ My Learning Log</p>
+      <p class="mb-0 text-muted small">Made by hamish :)</p>
+    </div>
+  </footer>
 
   <!-- MathJax (deferred for performance) -->
   <script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

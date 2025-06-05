@@ -281,7 +281,7 @@ code {
 /* Hero Section */
 .hero {
   background: linear-gradient(135deg, var(--color-accent), var(--color-accent-hover));
-  color: #fff;
+  color: var(--color-text);
   padding: 4rem 1rem;
   border-radius: 0.5rem;
   text-align: center;
