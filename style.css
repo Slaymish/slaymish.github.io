@@ -11,13 +11,13 @@
 /* 2. Custom Properties (Theme) */
 :root {
   /* Base colour palette */
-  --color-background: #f5f0ff;        /* light lavender background */
+  --color-background: #f5f7fa; /* light grey background */
   --color-surface:    #ffffff;
-  --color-text:       #262626;
-  --color-muted:      #555555;
-  --color-accent:     #7c3aed;        /* vibrant purple accent */
-  --color-accent-hover: #5b21b6; /* darker shade for hover states */
-  --color-border:     #dddddd;
+  --color-text:       #333333;
+  --color-muted:      #666666;
+  --color-accent:     #2563eb; /* cohesive blue accent */
+  --color-accent-hover: #1e40af; /* darker shade for hover states */
+  --color-border:     #e5e7eb;
 
   --font-sans:       'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --line-height:      1.6;
@@ -25,13 +25,13 @@
   --gap:              1rem;
 }
 [data-theme="dark"] {
-  --color-background: #1e1e1e;
-  --color-surface: #2c2c2c;
-  --color-text: #e4e4e4;
-  --color-muted: #aaaaaa;
-  --color-accent: #a78bfa;
-  --color-accent-hover: #c4b5fd;
-  --color-border: #444444;
+  --color-background: #121212;
+  --color-surface: #1e1e1e;
+  --color-text: #e0e0e0;
+  --color-muted: #a1a1aa;
+  --color-accent: #3b82f6;
+  --color-accent-hover: #60a5fa;
+  --color-border: #303030;
 }
 
 
@@ -101,6 +101,14 @@ p + p {
 */
 
 /* 7. Navigation */
+.site-nav {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+[data-theme="dark"] .site-nav {
+  background: var(--color-accent-hover);
+}
+
 .post-nav {
   margin-bottom: var(--gap);
   font-size: 0.9rem;
@@ -317,6 +325,20 @@ code {
 }
 
 #theme-toggle { cursor: pointer; }
+
+/* Accent button helper */
+.btn-accent {
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  display: inline-flex;
+  align-items: center;
+}
+.btn-accent:hover {
+  background: var(--color-accent);
+  color: #ffffff;
+}
 
 
 @media (max-width: 640px) {
