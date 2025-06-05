@@ -1,7 +1,6 @@
 /* style.css */
 
 /* 1. Reset & Box-Sizing */
-/* Bootstrap handles this with Reboot
 *,
 *::before,
 *::after {
@@ -67,7 +66,6 @@ p + p {
 }
 
 /* 6. Header */
-/* Bootstrap utilities will be used for this
 .site-header {
   text-align: center;
   margin-bottom: var(--gap);
@@ -89,7 +87,6 @@ p + p {
 */
 
 /* 7. Navigation */
-/* Bootstrap navs or buttons will be used
 .post-nav {
   margin-bottom: var(--gap);
   font-size: 0.9rem;
@@ -180,17 +177,13 @@ a.citation:hover {
 /* 13. Footer */
 .site-footer {
   margin-top: auto;
-  /* padding: var(--gap) 0; Bootstrap spacing utilities can handle this */
   text-align: center;
   font-size: 0.8rem;
   color: var(--color-muted);
-  /* border-top: 1px solid var(--color-border); Bootstrap can handle this if needed */
 }
 
 /* 14. Responsive Adjustments */
-/* Bootstrap handles responsive design through its grid system, utilities, and component styling.
    Custom responsive adjustments here might conflict or be redundant.
-   Review after applying Bootstrap classes to HTML.
 */
 /*
 @media (max-width: 768px) {
@@ -258,11 +251,9 @@ a.citation:hover {
 
 .site-footer {
   margin-top: auto; /* Pushes footer to the bottom */
-  /* padding: calc(var(--gap) * 1.5) 0; Bootstrap spacing utilities can handle this */
 }
 
 /* Add some margin below the main content before the footer */
-/* Bootstrap spacing utilities can handle this
 #main-content {
   margin-bottom: var(--gap);
 }
@@ -281,39 +272,6 @@ code {
   font-size: 0.9em;     /* Adjusts font size within code blocks */
 }
 
-/* 15. Bootstrap Colour Overrides */
-.bg-primary {
-  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-hover)) !important;
-}
-.btn-primary {
-  background-color: var(--color-accent);
-  border-color: var(--color-accent);
-}
-.btn-primary:hover,
-.btn-primary:focus {
-  background-color: var(--color-accent-hover);
-  border-color: var(--color-accent-hover);
-}
-.btn-outline-primary {
-  color: var(--color-accent);
-  border-color: var(--color-accent);
-}
-.btn-outline-primary:hover,
-.btn-outline-primary:focus {
-  color: #fff;
-  background-color: var(--color-accent);
-  border-color: var(--color-accent);
-}
-.navbar-dark .navbar-nav .nav-link {
-  color: #ffffffcc;
-}
-.navbar-dark .navbar-nav .nav-link:hover,
-.navbar-dark .navbar-nav .nav-link:focus {
-  color: #ffffff;
-}
-.navbar-brand {
-  font-weight: 600;
-}
 
 /* Hero Section */
 .hero {
@@ -334,9 +292,6 @@ code {
   font-size: clamp(1.1rem, 3vw, 1.5rem);
 }
 
-.hero .btn-primary {
-  margin-top: 1rem;
-}
 
 @keyframes fadeInSlide {
   from { opacity: 0; transform: translateY(20px); }
