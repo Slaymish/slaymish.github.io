@@ -195,15 +195,6 @@ build_index_page() {
   done
   body_content+="</ul>"
 
-  # Add RSS subscribe button
-  body_content+="$(cat <<'EOF'
-  <div class="rss-subscribe text-center my-4">
-    <a href="/atom.xml" title="Subscribe via RSS" class="btn btn-outline-primary">
-      Subscribe to RSS Feed
-    </a>
-  </div>
-EOF
-)"
 
   # Use printf for the body content to avoid issues with special characters
   printf "%s" "$body_content" | pandoc \
