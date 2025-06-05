@@ -8,8 +8,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-*/
-
 /* 2. Custom Properties (Theme) */
 :root {
   /* Base colour palette */
@@ -26,12 +24,23 @@
   --max-width:        800px;
   --gap:              1rem;
 }
+[data-theme="dark"] {
+  --color-background: #1e1e1e;
+  --color-surface: #2c2c2c;
+  --color-text: #e4e4e4;
+  --color-muted: #aaaaaa;
+  --color-accent: #a78bfa;
+  --color-accent-hover: #c4b5fd;
+  --color-border: #444444;
+}
+
 
 /* 3. Base Styles */
 html {
   font-family: var(--font-sans);
   line-height: var(--line-height);
   font-size: 16px;
+  transition: background 0.3s, color 0.3s;
   background: var(--color-background);
   color: var(--color-text);
 }
@@ -307,3 +316,9 @@ code {
   .hero { padding: 3rem 1rem; }
 }
 
+#theme-toggle { cursor: pointer; }
+
+
+@media (max-width: 640px) {
+  .container { width: 100%; padding: var(--gap); }
+}
