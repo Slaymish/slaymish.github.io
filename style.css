@@ -42,7 +42,6 @@ body {
 }
 
 /* 4. Container */
-/* Bootstrap provides .container and .container-fluid
 .container {
   width: 90%;
   max-width: var(--max-width);
@@ -52,17 +51,14 @@ body {
   box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* Soften existing shadow */
   border-radius: 4px;
 }
-*/
 
 /* 5. Typography Helpers */
-/* Bootstrap handles heading styles
 h1, h2, h3, h4, h5, h6 {
   color: var(--color-text);
-  margin-bottom: 0.5em;
-  margin-top: 1.0em;
+  margin-top: 1.2em;
+  margin-bottom: 0.6em;
   line-height: 1.3;
 }
-*/
 
 p + p {
   margin-top: 1em;
@@ -283,29 +279,3 @@ code {
   font-size: 0.9em;     /* Adjusts font size within code blocks */
 }
 
-/* Styles for RSS subscribe button are now handled by Bootstrap classes in build.sh */
-/*
-.rss-subscribe {
-  margin-top: 1.5em;
-  margin-bottom: 1em;
-  text-align: center;
-}
-
-.rss-subscribe a {
-  display: inline-block;
-  background-color: var(--color-accent);
-  color: var(--color-surface);
-  padding: 0.75em 1.5em;
-  border-radius: 4px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.2s ease;
-}
-
-.rss-subscribe a:hover,
-.rss-subscribe a:focus {
-  background-color: var(--color-accent-hover);
-  color: var(--color-surface);
-  text-decoration: none;
-}
-*/
