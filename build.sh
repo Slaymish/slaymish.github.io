@@ -117,6 +117,17 @@ copy_static_assets() {
   fi
   shopt -u nullglob # Reset nullglob
 
+  # Copy PDF files (if any)
+  shopt -s nullglob
+  local pdfs=("$POSTS_DIR"/*.pdf)
+  if [ ${#pdfs[@]} -gt 0 ]; then
+    echo "Copying PDFs from $POSTS_DIR to $OUTPUT_DIR/posts/"
+    cp -v "${pdfs[@]}" "$OUTPUT_DIR/posts/"
+  else
+    echo "No PDFs found in $POSTS_DIR to copy."
+  fi
+  shopt -u nullglob # Reset nullglob
+
   # Copy JS files from JS_CONFIG_DIR
   if [ -d "$JS_CONFIG_DIR" ]; then
     echo "Copying JavaScript files from $JS_CONFIG_DIR to $OUTPUT_DIR/$JS_CONFIG_DIR/"
@@ -195,6 +206,27 @@ build_index_page() {
   done
   body_content+="</ul>"
 
+  # Add PDF links section
+  echo "  Adding PDF document links to index page..."
+  local pdf_files_found=0
+  local pdf_section_content="<h2 class=\"text-2xl font-semibold mt-10\">PDF Documents</h2><ul class=\"post-list\">"
+  local temp_pdf_list_content=""
+  local pdf_file pdf_filename pdf_link_item
+
+  while IFS= read -r pdf_file; do
+    [[ -z "$pdf_file" ]] && continue # Skip empty lines
+    pdf_filename=$(basename "$pdf_file")
+    pdf_link_item="<li><a href=\"posts/$pdf_filename\">$pdf_filename</a> (PDF)</li>"
+    temp_pdf_list_content+="$pdf_link_item"
+    pdf_files_found=1
+  done < <(find "$POSTS_DIR" -maxdepth 1 -name "*.pdf" -type f)
+
+  if [ "$pdf_files_found" -eq 1 ]; then
+    body_content+="$pdf_section_content$temp_pdf_list_content</ul>"
+    echo "  PDF document links added."
+  else
+    echo "  No PDF documents found in $POSTS_DIR to link."
+  fi
 
   # Use printf for the body content to avoid issues with special characters
   printf "%s" "$body_content" | pandoc \
